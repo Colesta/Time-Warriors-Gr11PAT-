@@ -8,6 +8,7 @@ using TMPro;
 public class SetStats : MonoBehaviour
 {
     public Stats s;
+    public Score sc;
 
     public Stats Hero1;
     public Stats Hero2;
@@ -29,50 +30,55 @@ public class SetStats : MonoBehaviour
 
     void Start()
     {
-        Hero1.MaxHP = 100 ;
-        Hero1.CurrentHP = 100;
+
+
+
+
+
+        Hero1.MaxHP = 500;
+        Hero1.CurrentHP = 500;
         Hero1.MaxMana = 100 ;
         Hero1.CurrentMana = 100;
         Hero1.Type = s.FireType;
 
-        Hero2.MaxHP = 100;
-        Hero2.CurrentHP = 100;
+        Hero2.MaxHP = 500;
+        Hero2.CurrentHP = 500;
         Hero2.MaxMana = 100;
         Hero2.CurrentMana = 100;
         Hero2.Type = s.FireType;
 
-        Hero3.MaxHP = 100;
-        Hero3.CurrentHP = 100;
+        Hero3.MaxHP = 500;
+        Hero3.CurrentHP = 500;
         Hero3.MaxMana = 100;
         Hero3.CurrentMana = 100;
         Hero3.Type = s.FireType;
 
-        Hero4.MaxHP = 100;
-        Hero4.CurrentHP = 100;
+        Hero4.MaxHP = 500;
+        Hero4.CurrentHP = 500;
         Hero4.MaxMana = 100;
         Hero4.CurrentMana = 100;
         Hero4.Type = s.FireType;
 
-        Enemy1.MaxHP = 100;
-        Enemy1.CurrentHP = 100;
+        Enemy1.MaxHP = 500;
+        Enemy1.CurrentHP = 500;
         Enemy1.MaxMana = 100;
         Enemy1.CurrentMana = 100;
         Enemy1.Type = s.FireType;
 
-        Enemy2.MaxHP = 100;
-        Enemy2.CurrentHP = 100;
+        Enemy2.MaxHP = 500;
+        Enemy2.CurrentHP = 500;
         Enemy2.MaxMana = 100;
         Enemy2.CurrentMana = 100;
         Enemy2.Type = s.FireType;
 
-        Enemy3.MaxHP = 100;
-        Enemy3.CurrentHP = 100;
+        Enemy3.MaxHP = 500;
+        Enemy3.CurrentHP = 500;
         Enemy3.MaxMana = 100;
         Enemy3.CurrentMana = 100;
         Enemy3.Type = s.FireType;
 
-        Enemy4.MaxHP = 100;
-        Enemy4.CurrentHP = 100;
+        Enemy4.MaxHP = 500;
+        Enemy4.CurrentHP = 500;
         Enemy4.MaxMana = 100;
         Enemy4.CurrentMana = 100;
         Enemy4.Type = s.FireType;
@@ -316,6 +322,61 @@ public int returnMaxHeroHP(int num)
 
         }
     }
+
+    public void HealHero(int health)
+    {
+
+        if(sc.HealthPotions > 0)
+        {
+            Hero1.CurrentHP += health;
+            Hero2.CurrentHP += health;
+            Hero3.CurrentHP += health;
+            Hero4.CurrentHP += health;
+            UpdateStats();
+            sc.HealthPotions -= 1;
+        }
+       
+    }
+
+    public void AddMana(int mana)
+    {
+        if(sc.ManaPotions > 0)
+        {
+            Hero1.CurrentHP += mana;
+            Hero2.CurrentHP += mana;
+            Hero3.CurrentHP += mana;
+            Hero4.CurrentHP += mana;
+            UpdateStats();
+            sc.ManaPotions -= 1;
+        }
+       
+    }
+
+    public void RemoveMana(int target, int mana)
+    {
+
+        switch (target)
+        {
+            case 1:
+                Hero1.CurrentHP -= mana;
+                break;
+            case 2:
+                Hero2.CurrentHP -= mana;
+                break;
+            case 3:
+                Hero3.CurrentHP -= mana;
+                break;
+            case 4:
+                Hero4.CurrentHP -= mana;
+                break;
+        }
+        
+
+    }
+
+
+
+
 
     public void DamageEnemy(int target, int damage)
     {

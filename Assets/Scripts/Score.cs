@@ -2,91 +2,208 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Score : MonoBehaviour
 {
-    private int Money;
-    private int EnemyDefeated;
-    private int TotalRuns;
-    private int CompletedRuns;
+    public GameObject LoginScreen;
+    public GameObject MainMenu;
+
+    public TMP_InputField InputUser;
+    public TMP_InputField InputPass;
+
+    public TextMeshProUGUI Error;
+    public TextMeshProUGUI UserPlaying;
+
+    private string CurrentUser;
+    private string CurrentPass;
 
     public TextMeshProUGUI MoneyText;
-    public TextMeshProUGUI EnemeyDefeatedText;
+    public TextMeshProUGUI EnemiesDefeatedText;
     public TextMeshProUGUI TotalRunsText;
     public TextMeshProUGUI CompletedRunsText;
 
-    public void ReadScore()
+    public int Money = 250;
+    public int EnemiesDefeated = 0;
+    public int TotalRuns = 0;
+    public int CompletedRuns = 0;
+    public int HealthPotions = 0;
+    public int ManaPotions = 0;
+
+    public string usersDataPath = "/Resources/Scores.txt";
+
+
+    public void GetLoginInputValue()
     {
-        string filePath = Application.dataPath + "/Resources/Scores.txt";
+        CurrentUser = InputUser.text;
+        CurrentPass = InputPass.text;
 
-        if (File.Exists(filePath))
+    }
+
+   
+
+    public void ValidateLogin()
+    {
+        GetLoginInputValue();    
+
+        string path = Application.dataPath + usersDataPath;
+
+        if (File.Exists(path))
         {
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                string moneyLine = reader.ReadLine();
-                string enemyDefeatedLine = reader.ReadLine();
-                string totalRunsLine = reader.ReadLine();
-                string completedRunsLine = reader.ReadLine();
+            string[] lines = File.ReadAllLines(path);
 
-                if (moneyLine != null && enemyDefeatedLine != null && totalRunsLine != null && completedRunsLine != null)
+            foreach (string line in lines)
+            {
+                string[] values = line.Split('#');
+                string storedUsername = values[0];
+                string storedPassword = values[1];
+
+                if (string.Equals(storedUsername, CurrentUser, StringComparison.OrdinalIgnoreCase) && string.Equals(storedPassword, CurrentPass))
                 {
-                    Money = int.Parse(moneyLine);
-                    EnemyDefeated = int.Parse(enemyDefeatedLine);
-                    TotalRuns = int.Parse(totalRunsLine);
-                    CompletedRuns = int.Parse(completedRunsLine);
+                    Money = int.Parse(values[2]);
+                    EnemiesDefeated = int.Parse(values[3]);
+                    TotalRuns = int.Parse(values[4]);
+                    CompletedRuns = int.Parse(values[5]);
+                    HealthPotions = int.Parse(values[6]);
+                    ManaPotions = int.Parse(values[7]); ;
+
+                    SetMenuScore();
+                    DismissLogin();
+
+
+                    break; 
                 }
                 else
                 {
-                    Debug.LogError("File does not contain all required data.");
+                    Error.text = "Incorrect Username or Password";
                 }
             }
         }
         else
         {
-            Debug.LogError("File does not exist.");
+            Error.text = "File Doesnt Exist";
         }
     }
 
-    public void SetScore()
+    public string getCurrentUser()
+    {
+        return CurrentUser;
+    }
+
+    public void Register()
+    {
+        GetLoginInputValue();
+        
+        int money = 0;
+        int enemiesDefeated = 0;
+        int TotalRuns = 0;
+        int CompletedRuns = 0;
+        int HealthPotions = 0;
+        int ManaPotions = 0;
+
+        string userData = $"{CurrentUser}#{CurrentPass}#{money}#{enemiesDefeated}#{TotalRuns}#{CompletedRuns}#{HealthPotions}#{ManaPotions}";
+
+        string path = Application.dataPath + "/Resources/Scores.txt";
+
+        using (StreamWriter writer = new StreamWriter(path, true))
+        {
+            writer.WriteLine(userData);
+        }
+
+        SetMenuScore();
+        DismissLogin();
+    }
+
+    public void UpdateUserStats()
+    {
+        string username = getCurrentUser();
+
+        // Read all lines from the user data file
+        string[] lines = File.ReadAllLines(usersDataPath);
+        bool userFound = false;
+
+        // Iterate through the lines to find the user by username
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string[] userData = lines[i].Split('#');
+
+            if (userData.Length >= 4 && userData[0] == username)
+            {
+                // Update the user's money and enemies defeated
+                userData[2] = Money.ToString();
+                userData[3] = EnemiesDefeated.ToString();
+                userData[4] = TotalRuns.ToString();
+                userData[5] = CompletedRuns.ToString();
+                userData[6] = HealthPotions.ToString();
+                userData[7] = ManaPotions.ToString();
+
+                // Join the updated user data back into a single string
+                lines[i] = string.Join("#", userData);
+                userFound = true;
+                break;
+            }
+        }
+
+        if (userFound)
+        {
+            // Write the modified data back to the file
+            File.WriteAllLines(usersDataPath, lines);
+            Debug.Log("User data updated successfully.");
+        }
+        else
+        {
+            Debug.LogWarning("User not found. Update failed.");
+        }
+    }
+
+
+
+    
+
+    public void SetMenuScore()
     {
         MoneyText.text = "Money: " + Money;
-        EnemeyDefeatedText.text = "Enemies Defeated: " + EnemyDefeated;
+        EnemiesDefeatedText.text = "Enemies Defeated: " + EnemiesDefeated;
         TotalRunsText.text = "Total Runs: " + TotalRuns;
         CompletedRunsText.text = "Runs Completed: " + CompletedRuns;
     }
 
-    public void PIJIHWNXINUXNIENXIOQHD()
+    public void DismissLogin()
     {
-        ReadScore();
-        Money += 1;
-        EnemyDefeated += 1;
-        TotalRuns += 1; 
-        CompletedRuns += 1;
-        WriteScore();
+        LoginScreen.SetActive(false);
+        MainMenu.SetActive(true);
+        UserPlaying.text = "Current User Playing: \n" + CurrentUser;
     }
-    
 
-    public void WriteScore()
+
+    public void UpdateCurrentScore()
     {
-        string filePath = Application.dataPath + "/Resources/Scores.txt";
+        string path = Application.dataPath + usersDataPath;
 
-        string[] linesToWrite = {
-            Money.ToString(),
-            EnemyDefeated.ToString(),
-            TotalRuns.ToString(),
-            CompletedRuns.ToString()
-        };
-
-        using (StreamWriter writer = new StreamWriter(filePath))
+        if (File.Exists(path))
         {
-            foreach (string line in linesToWrite)
+            string[] lines = File.ReadAllLines(path);
+
+            foreach (string line in lines)
             {
-                writer.WriteLine(line);
+                string[] values = line.Split('#');
+                string storedUsername = values[0];
+                string storedPassword = values[1];
+
+                if (storedUsername == getCurrentUser())
+                {
+                    Money = int.Parse(values[2]);
+                    EnemiesDefeated = int.Parse(values[3]);
+                    TotalRuns = int.Parse(values[4]);
+                    CompletedRuns = int.Parse(values[5]);
+                    HealthPotions = int.Parse(values[6]);
+                    ManaPotions = int.Parse(values[7]); ;
+                    break;
+                }
             }
         }
-
-        Debug.Log("Lines written successfully.");
     }
-}
 
+}

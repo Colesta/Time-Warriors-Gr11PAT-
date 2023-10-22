@@ -7,17 +7,19 @@ public class EnemySystem : MonoBehaviour
     public Stats s;        
     public SetStats ss;
     public Moves m;
-
-    /// <summary>
-    /// Make a current enemy thing. This way we can initialize 4 unique enemies every round, without accidenlty using values from an enemy not currentl on screen
-    /// </summary>
+    public Score sc;
+   
 
     public GameObject BattleScreen;
     public GameObject ResultScreen;
+    public GameObject LoseScreen;
+    public GameObject WinScreen;
 
     void Start()
     {
         StartCoroutine(BattleSequence());
+
+        
 
     }
 
@@ -28,19 +30,37 @@ public class EnemySystem : MonoBehaviour
             int target = GenerateRandomTarget();
             int damage = GenerateRandomEnemyAttack();
 
-            Debug.Log("DamageHeroWithDelay started");
-            yield return new WaitForSeconds(5); // Wait for 5 seconds
-            ss.DamageHero(target, damage);
-            Debug.Log("DamageHeroWithDelay completed");
-            
 
-            // Check if all enemies are dead after each attack
+            yield return new WaitForSeconds(3); 
+            ss.DamageHero(target, damage);
+           
+
+
             if (ss.AllEnemyDead())
             {
-                // All enemies are defeated
                 BattleScreen.SetActive(false);
-                ResultScreen.SetActive(true);
-                break; // Exit the loop
+                sc.UpdateUserStats();
+                sc.EnemiesDefeated +=4;
+
+
+                if (s.CurrentLevel == 2) 
+                {
+                    WinScreen.SetActive(true);
+                    s.CurrentLevel = 1;
+                }
+                else
+                {
+                    ResultScreen.SetActive(true);
+                }
+            }
+
+
+
+            if (ss.AllHeroDead())
+            {
+                BattleScreen.SetActive(false);
+                LoseScreen.SetActive(true);
+
             }
         }
     }
@@ -68,6 +88,7 @@ public class EnemySystem : MonoBehaviour
         int maxRange = 4;
         int randomValue = UnityEngine.Random.Range(minRange, maxRange);
 
+
         return EnemyAttack(randomValue);
 
 
@@ -78,13 +99,13 @@ public class EnemySystem : MonoBehaviour
         switch (num)
         {
             case 1:
-                return 12;
+                return 25;
             case 2:
-                return 6;
+                return 30;
             case 3:
-                return 7;
+                return 45;
             case 4:
-                return 8;
+                return 70;
         }
 
 

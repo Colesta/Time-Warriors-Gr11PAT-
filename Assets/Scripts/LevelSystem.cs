@@ -4,13 +4,12 @@ using UnityEngine.UI;
 public class LevelSystem : MonoBehaviour
 {
     public Stats s;
+    public Score sc;
 
     public Image Background;
     public Sprite Level1;
     public Sprite Level2;
-    public Sprite Level3;
-    public Sprite Level4;
-    public Sprite Level5;
+    
 
     void Start()
     {
@@ -22,18 +21,25 @@ public class LevelSystem : MonoBehaviour
         {
             Background.sprite = Level2;
         }
-        else if (s.CurrentLevel == 3)
-        {
-            Background.sprite = Level3;
-        }
-        else if (s.CurrentLevel == 4)
-        {
-            Background.sprite = Level4;
-        }
-        else if (s.CurrentLevel == 5)
-        {
-            Background.sprite = Level5;
-        }
+       
 
     }
+
+    public void LoseScreen()
+    {
+        sc.UpdateCurrentScore();
+        sc.TotalRuns += 1;
+        s.CurrentLevel = 1;
+    }
+
+    public void WinScreen()
+    {
+        sc.UpdateCurrentScore();
+        sc.TotalRuns += 1;
+        sc.CompletedRuns += 1;
+        s.CurrentLevel = 1;
+    }
+
+
+
 }
