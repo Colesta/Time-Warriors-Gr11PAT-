@@ -14,6 +14,8 @@ public class Results : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //Adds the money you earned into permanent storage as well as Dislay it on screen
         MoneyText.text = "Money:        " + CalculateMoney();
         Dialouge.text = "Good Job";
 
@@ -24,6 +26,7 @@ public class Results : MonoBehaviour
 
     }
 
+    //Randomly select an amount of money to be rewarded
     public int CalculateMoney()
     {
         int minRange = 75;

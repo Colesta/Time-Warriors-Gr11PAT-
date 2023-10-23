@@ -29,6 +29,8 @@ public class Shop : MonoBehaviour
 
     void Start()
     {
+        //Initializes screen to show the next level you will fifght, and takes Variables from permanent storage that relate to the current user and also puts that on screen to be used
+        s.CurrentLevel += 1;
         NextLevel.text = "Level " + s.CurrentLevel;
 
         HPriceText.text = PriceHealth + "";
@@ -43,7 +45,7 @@ public class Shop : MonoBehaviour
     }
 
  
-
+    //Add potions to inventory and decrese your total money by cost of item
     public void BuyHealthPotions()
     {
         Debug.Log("ItemPressed");

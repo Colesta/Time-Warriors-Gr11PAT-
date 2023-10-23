@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
+
+    //Stats used by all GameObjects
     public int MaxHP;
     public int CurrentHP;
     public int MaxMana;
@@ -18,7 +20,8 @@ public class Stats : MonoBehaviour
     public string EclipseType = "Eclipse";
     public string SolarType = "Solar";
 
-    public int CurrentLevel = 1;
+    //Current level equals 0 as if you click either shop or play, the level will be added by 1 automatically, so initialzing the variable with 0 means that the first level will always be 1
+    public int CurrentLevel = 0;
 
    
 

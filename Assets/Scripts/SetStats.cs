@@ -30,10 +30,7 @@ public class SetStats : MonoBehaviour
 
     void Start()
     {
-
-
-
-
+        //Objects for all Characters, since they share the same variables
 
         Hero1.MaxHP = 500;
         Hero1.CurrentHP = 500;
@@ -75,6 +72,8 @@ public class SetStats : MonoBehaviour
         Enemy4.CurrentHP = 500;
         Enemy4.Type = s.FireType;
 
+        //The Mini health bars seen at all times on the batte screen above the characters heads are initialized here
+
         HPH1.maxValue = returnMaxHeroHP(1);
         HPH1.value = returnCurrentHeroHP(1);
 
@@ -105,6 +104,7 @@ public class SetStats : MonoBehaviour
     }
 
 
+    //Udates stats of the healthbars so you can see the damage done in real time
     public void UpdateStats()
     {
         HPH1.value = returnCurrentHeroHP(1);
@@ -119,6 +119,9 @@ public class SetStats : MonoBehaviour
     }
 
 
+    //For all return methods you will see below, they were used because its more conveniant and easy to type "returnMaxHeroHP(1)" then "ss.Hero1.MaxHP" multiple times
+
+    //Return a specific heroes max HP
 public int returnMaxHeroHP(int num)
     {
         switch (num)
@@ -139,7 +142,7 @@ public int returnMaxHeroHP(int num)
         }
         return 0;
     }
-
+    //Return a specific enemies max HP
     public int returnMaxEnemyHP(int num)
     {
         switch (num)
@@ -161,6 +164,7 @@ public int returnMaxHeroHP(int num)
         return 0;
     }
 
+    //Return a specific heroes current HP
     public int returnCurrentHeroHP(int num)
     {
         switch (num)
@@ -182,6 +186,7 @@ public int returnMaxHeroHP(int num)
         return 0;
     }
 
+    //Return a specific enemies current HP
     public int returnCurrentEnemyHP(int num)
     {
         switch (num)
@@ -203,6 +208,7 @@ public int returnMaxHeroHP(int num)
         return 0;
     }
 
+    //Return specific max mana
     public int returnMaxMana(int num)
     {
         switch (num)
@@ -223,6 +229,8 @@ public int returnMaxHeroHP(int num)
         }
         return 0;
     }
+
+    //Return specific current mana
 
     public int returnCurrentMana(int num)
     {
@@ -245,6 +253,7 @@ public int returnMaxHeroHP(int num)
         return 0;
     }
 
+    
     public string returnType(int Num)
     {
         switch (Num)
@@ -266,7 +275,7 @@ public int returnMaxHeroHP(int num)
     }
     
 
-
+    //Method that enemies use to attack the hero
     public void DamageHero(int target, int damage)
     {
         switch (target)
@@ -292,9 +301,10 @@ public int returnMaxHeroHP(int num)
         }
     }
 
+    //Add health to all heroes, used for the health potion
     public void HealHero(int health)
     {
-
+        // if you have no health potions, then you wont heal
         if(sc.HealthPotions > 0)
         {
             Hero1.CurrentHP += health;
@@ -307,6 +317,7 @@ public int returnMaxHeroHP(int num)
        
     }
 
+    //same logic for Heal Hero here
     public void AddMana(int mana)
     {
         if(sc.ManaPotions > 0)
@@ -321,6 +332,7 @@ public int returnMaxHeroHP(int num)
        
     }
 
+    //when attacking you lose mana, this is how
     public void RemoveMana(int target, int mana)
     {
 
@@ -346,7 +358,7 @@ public int returnMaxHeroHP(int num)
 
 
 
-
+    //Method that hereoes use to attack the enemy
     public void DamageEnemy(int target, int damage)
     {
         switch (target)
@@ -372,6 +384,7 @@ public int returnMaxHeroHP(int num)
         }
     }
 
+    //Check if the hero has died
     public bool CheckIfHeroDead(int num)
     {
         switch (num)
@@ -388,6 +401,7 @@ public int returnMaxHeroHP(int num)
         return false;
     }
 
+    //Check if the enemy has died
     public bool CheckIfEnemyDead(int num)
     {
         switch (num)
@@ -404,6 +418,7 @@ public int returnMaxHeroHP(int num)
         return false;
     }
 
+    //Both methods below are used to see if either respective side is fully dead, and will call diffrent screens based on if either are true
     public bool AllHeroDead()
     {
         return CheckIfHeroDead(1) && CheckIfHeroDead(2) && CheckIfHeroDead(3) && CheckIfHeroDead(4);

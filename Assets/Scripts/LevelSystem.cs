@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class LevelSystem : MonoBehaviour
     void Start()
     {
 
+        //Sets the background of the battle screen to diffenret images bsed on the current level
+
         if (s.CurrentLevel == 1)
         {
             Background.sprite = Level1;
@@ -26,6 +29,15 @@ public class LevelSystem : MonoBehaviour
 
     }
 
+    //Increase level count by one
+
+    public void AddLevel()
+    {
+        s.CurrentLevel += 1;
+    }
+
+
+    //When button is pressed on lose scrreen, will run this code. Updates your scores
     public void LoseScreen()
     {
         sc.UpdateCurrentScore();
@@ -33,6 +45,8 @@ public class LevelSystem : MonoBehaviour
         s.CurrentLevel = 1;
     }
 
+
+    //When button is pressed on win scrreen, will run this code. Updates your scores
     public void WinScreen()
     {
         sc.UpdateCurrentScore();

@@ -32,13 +32,21 @@ public class ShowInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Stats s;
     public SetStats ss;
 
+    
+    //When the mouse hovers over a certain GameObject, The Stats of that object will be displayed on Screen. This was done to minimize UI elements on screen to be less overwhelming
     public void OnPointerEnter(PointerEventData eventData)
     {
         visibleObject.SetActive(true);
         ss = Hero1.GetComponent<SetStats>();
 
+        //trigger Object is the object that when the mouse hovers over it, the "Visible Object" (Whihc is the same object for every case) will be visible
+        //while the same object is being made visible everytime, each if statement chnages the values of the object, making it unique to every game object whilst cuttong down on UI elements (Meaning less startup time and loding)
+
+        
         if (triggerObject == Hero1)
         {
+
+            
 
             HealthText.text = ss.returnCurrentHeroHP(1) + "/" + ss.returnMaxHeroHP(1);
             HPSlider.maxValue = ss.returnMaxHeroHP(1);
@@ -52,8 +60,7 @@ public class ShowInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             Mana.SetActive(true);
 
-            //Image fillImage = HPSlider.GetComponentsInChildren<Image>()[1]; 
-            //fillImage.color = fillColor;
+            
 
         }
 

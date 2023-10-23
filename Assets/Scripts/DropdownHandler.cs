@@ -22,6 +22,7 @@ public class DropdownHandler : MonoBehaviour
         }
     }
 
+    //Method to get the value selected from a drop down menu
     private void OnDropdownValueChanged(int value)
     {
         // Get the selected option from the Dropdown's options list.

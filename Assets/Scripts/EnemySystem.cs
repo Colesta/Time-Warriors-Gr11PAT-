@@ -23,6 +23,7 @@ public class EnemySystem : MonoBehaviour
 
     }
 
+    //Lets the Battle sequence happen every 3 seconds, allwoing the enemies to automatically take their own "turns"
     IEnumerator BattleSequence()
     {
         while (!ss.AllEnemyDead())
@@ -30,7 +31,7 @@ public class EnemySystem : MonoBehaviour
             int target = GenerateRandomTarget();
             int damage = GenerateRandomEnemyAttack();
 
-
+            //Attack a randomly selected target by a random amount of damage every 3 seconds
             yield return new WaitForSeconds(3); 
             ss.DamageHero(target, damage);
            
@@ -38,6 +39,8 @@ public class EnemySystem : MonoBehaviour
 
             if (ss.AllEnemyDead())
             {
+                //When all enmies die, the battle screen goes away and the amount of enemies defeated is increased and saved to permanent storage
+                //If you havnt finished all levels, result screen is brought up, if you have, then you see the win screen
                 BattleScreen.SetActive(false);
 
                 sc.UpdateUserStats();
@@ -55,7 +58,7 @@ public class EnemySystem : MonoBehaviour
                 }
             }
 
-
+            //If all heroes died, then you see the lose screen
 
             if (ss.AllHeroDead())
             {
@@ -73,7 +76,7 @@ public class EnemySystem : MonoBehaviour
     }
 
 
-
+    //Randoly select between the 4 heroes
     public int GenerateRandomTarget()
     {
         int minRange = 1;
@@ -83,6 +86,7 @@ public class EnemySystem : MonoBehaviour
 
     }
 
+    //randomly select how what damge will be done
     public int GenerateRandomEnemyAttack()
     {
         int minRange = 1;
@@ -94,7 +98,7 @@ public class EnemySystem : MonoBehaviour
 
 
     }
-
+    // The actual value of said damage 
     public int EnemyAttack(int num)
     {
         switch (num)

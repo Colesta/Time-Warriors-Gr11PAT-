@@ -56,12 +56,14 @@ public class Moves : MonoBehaviour
 
     void Start()
     {
+        //initilaize your inventory so you can use in battle, as well as the current hero
         sc.UpdateCurrentScore();
         NumHealthP.text = "x" +  sc.HealthPotions;
         NumManaP.text = "x" + sc.ManaPotions;
         currentHeroText.text = "Current Hero: " + CurrentPlayer;
     }
 
+    //Makes it the next players turn by increasing current player by 1, and if its 4 setting it back to 1
     public void NextPlayersTurn()
     {
         CurrentPlayer += 1;
@@ -75,7 +77,7 @@ public class Moves : MonoBehaviour
 
    
 
-
+    //When the single button is pressed and this method is called, diffrent moves will be made visible depedning on the current hero
     public void Single()
     {
         switch (CurrentPlayer)
@@ -115,6 +117,8 @@ public class Moves : MonoBehaviour
         }
 
     }
+
+    //Same logic as single
 
     public void Multiple()
     {
@@ -156,7 +160,9 @@ public class Moves : MonoBehaviour
 
     }
 
-
+    //All moves the heroes can do, with move 1 being a single attack wherre you use a drop down menu to select a target and then attack, decreasing the enemies health and decreasing your mana,
+    //while mana does the same exect all enemies healths are being decreased. After every move the NextPlayersTurn method is called automatically mkaing it the next players turn. If the current her is dead, 
+    //Instead of doing damage the next hero will be able to go
 
     public void Hero1Move1()
     {
@@ -398,6 +404,8 @@ public class Moves : MonoBehaviour
         Buttons.SetActive(true);
     }
 
+    //Potions will increase either your health or mana for all players, and decrease the amount of that item you have in your inventory by 1
+
     public void HealthPotion()
     {
         int health = 50;
@@ -424,6 +432,8 @@ public class Moves : MonoBehaviour
 
     }
 
+
+    //Turn the enemies into little skulls if they die
     private void ChangeEnemyOnDeath()
     {
         if (ss.CheckIfEnemyDead(1))
