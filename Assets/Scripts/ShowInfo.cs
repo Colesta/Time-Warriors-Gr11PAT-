@@ -165,5 +165,7 @@ public class ShowInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         // When the mouse exits the trigger object, hide the visible object
         visibleObject.SetActive(false);
+
+
     }
 }

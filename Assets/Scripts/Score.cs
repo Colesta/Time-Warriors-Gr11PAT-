@@ -105,7 +105,7 @@ public class Score : MonoBehaviour
 
         string userData = $"{CurrentUser}#{CurrentPass}#{money}#{enemiesDefeated}#{TotalRuns}#{CompletedRuns}#{HealthPotions}#{ManaPotions}";
 
-        string path = Application.dataPath + "/Resources/Scores.txt";
+        string path = Application.dataPath + usersDataPath;
 
         using (StreamWriter writer = new StreamWriter(path, true))
         {
@@ -119,48 +119,51 @@ public class Score : MonoBehaviour
     public void UpdateUserStats()
     {
         string username = getCurrentUser();
+        string path = Application.dataPath + usersDataPath;
 
-        // Read all lines from the user data file
-        string[] lines = File.ReadAllLines(usersDataPath);
-        bool userFound = false;
-
-        // Iterate through the lines to find the user by username
-        for (int i = 0; i < lines.Length; i++)
+        if (File.Exists(path))
         {
-            string[] userData = lines[i].Split('#');
+            string[] lines = File.ReadAllLines(path);
+            bool userFound = false;
 
-            if (userData.Length >= 4 && userData[0] == username)
+            for (int i = 0; i < lines.Length; i++)
             {
-                // Update the user's money and enemies defeated
-                userData[2] = Money.ToString();
-                userData[3] = EnemiesDefeated.ToString();
-                userData[4] = TotalRuns.ToString();
-                userData[5] = CompletedRuns.ToString();
-                userData[6] = HealthPotions.ToString();
-                userData[7] = ManaPotions.ToString();
+                string[] userData = lines[i].Split('#');
 
-                // Join the updated user data back into a single string
-                lines[i] = string.Join("#", userData);
-                userFound = true;
-                break;
+                if (userData.Length >= 4 && userData[0] == username)
+                {
+                    // Update the user's data
+                    userData[2] = Money.ToString();
+                    userData[3] = EnemiesDefeated.ToString();
+                    userData[4] = TotalRuns.ToString();
+                    userData[5] = CompletedRuns.ToString();
+                    userData[6] = HealthPotions.ToString();
+                    userData[7] = ManaPotions.ToString();
+
+                    // Join the updated user data back into a single string
+                    lines[i] = string.Join("#", userData);
+                    userFound = true;
+                    break;
+                }
             }
-        }
 
-        if (userFound)
-        {
-            // Write the modified data back to the file
-            File.WriteAllLines(usersDataPath, lines);
-            Debug.Log("User data updated successfully.");
+            if (userFound)
+            {
+                // Now, you should write the modified data back to the file
+                File.WriteAllLines(path, lines);
+                Debug.Log("User data updated successfully.");
+            }
+            else
+            {
+                Debug.LogWarning("User not found. Update failed.");
+            }
         }
         else
         {
-            Debug.LogWarning("User not found. Update failed.");
+            Debug.LogWarning("File Doesnt Exist");
         }
     }
 
-
-
-    
 
     public void SetMenuScore()
     {

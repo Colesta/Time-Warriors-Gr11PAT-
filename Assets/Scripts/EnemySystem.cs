@@ -39,6 +39,7 @@ public class EnemySystem : MonoBehaviour
             if (ss.AllEnemyDead())
             {
                 BattleScreen.SetActive(false);
+
                 sc.UpdateUserStats();
                 sc.EnemiesDefeated +=4;
 

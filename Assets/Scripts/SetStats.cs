@@ -61,26 +61,18 @@ public class SetStats : MonoBehaviour
 
         Enemy1.MaxHP = 500;
         Enemy1.CurrentHP = 500;
-        Enemy1.MaxMana = 100;
-        Enemy1.CurrentMana = 100;
         Enemy1.Type = s.FireType;
 
         Enemy2.MaxHP = 500;
         Enemy2.CurrentHP = 500;
-        Enemy2.MaxMana = 100;
-        Enemy2.CurrentMana = 100;
         Enemy2.Type = s.FireType;
 
         Enemy3.MaxHP = 500;
         Enemy3.CurrentHP = 500;
-        Enemy3.MaxMana = 100;
-        Enemy3.CurrentMana = 100;
         Enemy3.Type = s.FireType;
 
         Enemy4.MaxHP = 500;
         Enemy4.CurrentHP = 500;
-        Enemy4.MaxMana = 100;
-        Enemy4.CurrentMana = 100;
         Enemy4.Type = s.FireType;
 
         HPH1.maxValue = returnMaxHeroHP(1);
@@ -272,30 +264,7 @@ public int returnMaxHeroHP(int num)
         }
         return null;
     }
-    //public void SetHeroStats(int num)
-    //{
-    //    s = GetComponent<Stats>();
-    //    switch (num)
-    //    {
-    //        case 1:
-    //            Hero1HealthText.text = s.returnCurrentHeroHP(1) + "/" + s.returnMaxHeroHP(1);
-    //            Hero1HPSlider.value = s.returnCurrentHeroHP(1);
-    //            break;
-    //        case 2:
-    //            Hero2HealthText.text = s.returnCurrentHeroHP(2) + "/" + s.returnMaxHeroHP(2);
-    //            Hero2HPSlider.value = s.returnCurrentHeroHP(2);
-    //            break;
-    //        case 3:
-    //            Hero3HealthText.text = s.returnCurrentHeroHP(3) + "/" + s.returnMaxHeroHP(3);
-    //            Hero3HPSlider.value = s.returnCurrentHeroHP(3);
-    //            break;
-    //        case 4:
-    //            Hero4HealthText.text = s.returnCurrentHeroHP(4) + "/" + s.returnMaxHeroHP(4);
-    //            Hero4HPSlider.value = s.returnCurrentHeroHP(4);
-    //            break;
-    //    }
-
-    //}
+    
 
 
     public void DamageHero(int target, int damage)
@@ -342,10 +311,10 @@ public int returnMaxHeroHP(int num)
     {
         if(sc.ManaPotions > 0)
         {
-            Hero1.CurrentHP += mana;
-            Hero2.CurrentHP += mana;
-            Hero3.CurrentHP += mana;
-            Hero4.CurrentHP += mana;
+            Hero1.CurrentMana += mana;
+            Hero2.CurrentMana += mana;
+            Hero3.CurrentMana += mana;
+            Hero4.CurrentMana += mana;
             UpdateStats();
             sc.ManaPotions -= 1;
         }
@@ -358,16 +327,16 @@ public int returnMaxHeroHP(int num)
         switch (target)
         {
             case 1:
-                Hero1.CurrentHP -= mana;
+                Hero1.CurrentMana -= mana;
                 break;
             case 2:
-                Hero2.CurrentHP -= mana;
+                Hero2.CurrentMana -= mana;
                 break;
             case 3:
-                Hero3.CurrentHP -= mana;
+                Hero3.CurrentMana -= mana;
                 break;
             case 4:
-                Hero4.CurrentHP -= mana;
+                Hero4.CurrentMana -= mana;
                 break;
         }
         

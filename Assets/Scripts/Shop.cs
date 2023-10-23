@@ -29,8 +29,7 @@ public class Shop : MonoBehaviour
 
     void Start()
     {
-        s.CurrentLevel += 1;
-        NextLevel.text = "Level" + s.CurrentLevel;
+        NextLevel.text = "Level " + s.CurrentLevel;
 
         HPriceText.text = PriceHealth + "";
         MPriceText.text = PriceMana + "";

@@ -334,7 +334,7 @@ public class Moves : MonoBehaviour
         ss.DamageEnemy(4, damage);
 
         ss.UpdateStats();
-        Hero2Multiple.SetActive(false);
+        Hero3Multiple.SetActive(false);
         BackgroundImage.SetActive(false);
 
         Buttons.SetActive(true);

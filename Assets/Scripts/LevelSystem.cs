@@ -13,6 +13,7 @@ public class LevelSystem : MonoBehaviour
 
     void Start()
     {
+
         if (s.CurrentLevel == 1)
         {
             Background.sprite = Level1;
