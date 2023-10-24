@@ -103,6 +103,25 @@ public class SetStats : MonoBehaviour
 
     }
 
+    public void InitializeScreen(){
+        Hero1.CurrentHP = 500;
+        Hero1.CurrentMana = 100;
+
+        Hero2.CurrentHP = 500;
+        Hero2.CurrentMana = 100;
+
+        Hero3.CurrentHP = 500;
+        Hero3.CurrentMana = 100;
+
+        Hero4.CurrentHP = 500;
+        Hero4.CurrentMana = 100;
+
+        Enemy1.CurrentHP = 500;
+        Enemy2.CurrentHP = 500;
+        Enemy3.CurrentHP = 500;
+        Enemy4.CurrentHP = 500;
+    }
+
 
     //Udates stats of the healthbars so you can see the damage done in real time
     public void UpdateStats()
